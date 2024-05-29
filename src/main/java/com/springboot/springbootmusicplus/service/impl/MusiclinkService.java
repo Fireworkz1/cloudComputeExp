@@ -33,5 +33,8 @@ public class MusiclinkService implements IMusiclinkService {
         List<Musiclink> list = musiclinkOperator.list();
         return CollectionUtils.isNotEmpty(list) ? list : null;
     }
-
+    @Override
+    public List<Musiclink> getMusiclinkInfoBySinger(String singer) {
+        return musiclinkOperator.getMusiclinkInfoBySinger(singer);
+    }
 }

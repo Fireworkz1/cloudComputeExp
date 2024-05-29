@@ -42,5 +42,9 @@ public class MusiclinkOperator extends BaseOperator<MusiclinkMapper, Musiclink> 
         List<Musiclink> musiclinkList = musiclinkMapper.selectList(wrapper);
         return CollectionUtils.isNotEmpty(musiclinkList) ? musiclinkList : null;
     }
-
+    public List<Musiclink> getMusiclinkInfoBySinger(String singer) {
+        LambdaQueryWrapper<Musiclink> query = new LambdaQueryWrapper<>();
+        query.eq(Musiclink::getMlSinger, singer);
+        return musiclinkMapper.selectList(query);
+    }
 }

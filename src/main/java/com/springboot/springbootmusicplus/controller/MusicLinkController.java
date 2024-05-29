@@ -59,5 +59,13 @@ public class MusicLinkController {
         log.info("搜索到的歌曲：{}", JSON.toJSONString(musicList));
         return Response.succ(musicList);
     }
-
+    @GetMapping("/getSongsBySinger/{singerName}")
+    @ApiOperation(value = "根据歌手名字查询歌曲", httpMethod = "GET")
+    public Response<List<Musiclink>> getSongsBySinger(@PathVariable String singerName) {
+        List<Musiclink> songs = musiclinkService.getMusiclinkInfoBySinger(singerName);
+        if (CollectionUtils.isEmpty(songs)) {
+            return Response.fail(FailEnums.NOT_EXISTS_ERROR.getCode(), "没有找到该歌手的歌曲");
+        }
+        return Response.succ(songs);
+    }
 }

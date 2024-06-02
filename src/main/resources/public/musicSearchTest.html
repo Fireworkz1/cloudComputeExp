@@ -82,7 +82,23 @@
               rearchSong($('#test').attr("action"));
           }
       }); */
-    getList2("songName=" + $.cookie("song_search"));//调用getlist2方法
+    /*
+    * 兼顾查询歌手与歌曲
+    * */
+    // 获取 song_search cookie 的值
+    var songSearch = $.cookie("song_search");
+
+    // 检查 song_search cookie 是否存在
+    if (songSearch) {
+        // 查询歌曲
+        getList2("songName=" + songSearch);
+    } else {
+        // 查询歌手
+        var songSearch2 = $.cookie("singer");
+        getList(songSearch2);
+    }
+
+
 
     function getList2(lll) {
         $.ajax({
@@ -153,6 +169,9 @@
     }//已在mymusic中注释
 
 
+
+
+
     function fav(j) {
         $.ajax({
             async: false,
@@ -176,6 +195,73 @@
 
             },
 
+        })
+    }//已在mymusic中注释
+
+
+    function getList(singerName) {
+        $.ajax({
+            url: "musicLink/getSongsBySinger/"+singerName,//后台地址
+            type: "GET",//post方式请求
+            success: function (data) {
+                if (data.code == 200) {
+                    console.log("搜索倒了。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
+                    var str = '';
+                    /* data.data.list.length对应respon.map.list.length */
+                    for (var i = 0; i < data.data.length; i++) {
+                        var a = i + 1;
+
+                        str += '<tr>'
+                            + '<td class="number111"  style="padding: 14px;border-bottom: 1px solid #eee; width: 100px;text-align: center;">' + a + '</td>'
+                            + '<td  style="padding: 14px;border-bottom: 1px solid #eee;width: 600px;text-align: center;"><a class=sName' + i + ' href="#">' + data.data[i].mlSongname + '</a>' +
+                            '<span class="glyphicon glyphicon-heart" id=sFav' + i + ' style="color: #eee;float: right;"></span></td>'
+                            + '<td style="padding: 14px;border-bottom: 1px solid #eee;width: 300px;text-align: center;"><a href="#">' + data.data[i].mlSinger + '</a></td>'
+                            + '</tr>';
+
+                        function play(i) {
+
+                            $("table").on('click', '.sName' + i, function () {
+                                fn(i);
+                            });
+                        }
+
+                        play(i);
+
+                        function play1(i) {
+                            $("#sFav").unbind();
+                            $("table").on('click', '#sFav' + i, function () {
+                                fn1(i);
+                                fav(i);
+                            });
+                        }
+
+                        play1(i);
+                    }
+
+                    function fn(j) {
+                        console.log(data.data[j].ml_id);
+                        $.cookie("songLink", data.data[j].mlSonglink, {expires: 7, path: "/"});
+                        $.cookie("songName", data.data[j].mlSongname, {expires: 7, path: "/"});
+                        $.cookie("songSinger", data.data[j].mlSinger, {expires: 7, path: "/"});
+                        $.cookie("songPhoto", data.data[j].mlPhotolink, {expires: 7, path: "/"});
+                        window.location.href = "/QQmusic.html";
+                    }
+
+                    function fn1(j) {
+                        console.log(data.data[j].ml_id);
+                        $.cookie("songId", data.data[j].mlId, {expires: 7, path: "/"});
+                        $.cookie("songName", data.data[j].mlSongname, {expires: 7, path: "/"});
+                    }
+
+
+                    $("table tbody").html(str);
+                } else if (data.code != 200) {
+                    alert("搜索不到歌曲！");
+                }
+            },
+            error: function (data) {
+                alert(JSON.stringify(data));
+            }
         })
     }//已在mymusic中注释
 

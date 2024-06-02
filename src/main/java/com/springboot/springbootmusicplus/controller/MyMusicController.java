@@ -6,6 +6,7 @@ import com.springboot.springbootmusicplus.common.page.PageResponse;
 import com.springboot.springbootmusicplus.common.response.Response;
 import com.springboot.springbootmusicplus.entity.Musiclink;
 import com.springboot.springbootmusicplus.entity.Mymusic;
+import com.springboot.springbootmusicplus.model.request.CollectIdRequest;
 import com.springboot.springbootmusicplus.service.impl.MusiclinkService;
 import com.springboot.springbootmusicplus.service.impl.MymusicService;
 import io.swagger.annotations.Api;
@@ -13,10 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,9 +46,11 @@ public class MyMusicController {
 
     @PostMapping("/addMusicCollect")
     @ApiOperation(value = "歌曲收藏", httpMethod = "POST")
-    public Response<PageResponse<Musiclink>> addMusicCollect(@RequestParam(required = false) int songId,
-                                                             @RequestParam(required = false) String songName,
-                                                             @RequestParam(required = false) Integer userId) {
+    public Response<PageResponse<Musiclink>> addMusicCollect(@RequestParam(required = false) Integer userId,Integer songId,String songName
+                                                            ) {
+//        Integer userId= request.getUserId();
+//        Integer songId= request.getSongId();
+//        Integer songName= request.getSongId();
 
         log.info("歌曲收藏请求：userId：{}, songId：{}, songName：{}", userId, songId, songName);
         // 根据用户Id和歌曲名判断歌曲是否重复收藏

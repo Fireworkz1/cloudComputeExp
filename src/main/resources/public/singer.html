@@ -10,7 +10,6 @@
 	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="css/index.css">
-	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
 </head>
 <body >
@@ -120,61 +119,12 @@
                                                    下方nav标签导航栏开始）
 
 --><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-<div id="app">
-	<template>
-		<el-dialog
-				title="upload music"
-				:visible.sync="is_add_form_visiable"
-				width="33%">
-			<div>
-				<el-form ref="form" :model="data" label-width="80px">
-					<el-form-item label="音乐名">
-						<el-input v-model="data.name" type="text" placeholder="请输入音乐名" />
-					</el-form-item>
-					<el-form-item label="歌手">
-						<el-input v-model="data.singer" type="text" placeholder="请输入歌手" />
-					</el-form-item>
-					<el-form-item>
-						<el-upload
-								ref="upload"
-								action=""
-								class="upload-demo"
-								:http-request="httpRequest"
-								:multiple="false"
-								:limit="1"
-								:auto-upload="false"
-								:file-list="data.file">
-							<!--                            <el-button size="small" type="primary">选择音乐文件</el-button>-->
-						</el-upload>
-					</el-form-item>
-					<el-form-item>
-						<el-upload
-								ref="upload"
-								action=""
-								class="upload-demo"
-								:http-request="httpRequest0"
-								:multiple="false"
-								:limit="1"
-								:auto-upload="false"
-								:file-list="data.file">
-							<!--                            <el-button size="small" type="primary">选择音乐图片</el-button>-->
-						</el-upload>
-					</el-form-item>
-					<el-form-item>
-						<el-button type="primary" @click="onSubmit">提交</el-button>
-					</el-form-item>
-				</el-form>
-
-			</div>
-		</el-dialog>
-	</template>
 <nav class="daohanglan">
 	<div class="big3">
 		<ul>
 			<li><a class=" erjicaidan2" href="/index.html  ">首页</a></li>
-			<li><a class=" erjicaidan2" href="/bangdan.html">歌曲列表</a></li>
+			<li><a class=" erjicaidan2" href="/bangdan.html">榜单</a></li>
 			<li><a class="gudingbeij erjicaidan2" href="/singer.html">歌手</a></li>
-			<li><a class="erjicaidan2" @click="show">上传音乐</a></li>
 <!--			<li><a class="erjicaidan2" href="/mv.html   ">MV</a></li>-->
 <!--			<li class="dropdown">-->
 <!--				<a class="gudingbeij erjicaidan2" href="#" class="dropdown-toggle" data-toggle="dropdown">-->
@@ -197,7 +147,7 @@
 	</div>
 	</div>
 </nav>
-</div>
+	
 <div class="big">
 	<div class="l">
 		<ul class="sng1">
@@ -492,62 +442,5 @@
 
 
 </script>
-<script src="vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-<!-- 引入 Element UI 的 JS 文件 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script>
-	new Vue({
-  el: '#app',
-  name: "upload",
-        data() {
-            return {
-                data: {
-                    name: null,
-                    age: 18,
-                    file: null ,
-                    music: null ,
-                    picture: null // 用于存储上传文件的元数据
-                },
-                is_add_form_visiable: false // 改为正确的属性名
-            };
-        },
-  methods: {
-            show(){
-            this.is_add_form_visiable = true
-            },
-            httpRequest(param){
-                //把上传的文件赋值给data属性的file
-                this.data.music = param.file;
-            },
-            httpRequest0(param){
-                //把上传的文件赋值给data属性的file
-                this.data.picture = param.file;
-            },
-            /* 提交修改*/
-            onSubmit() {
-                //注意执行submit方法后，他会触发upload组件中的 http-request
-                this.$refs.upload.submit()
-                // 新建form表单
-                const formData = new FormData();
-                formData.append("name", this.data.name);
-                formData.append("age", this.data.age);
-                formData.append("music", this.data.music);
-                formData.append("picture", this.data.picture);
-                let config = {
-                    header: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }
-                this.axios.post("/file/upload", formData, config)
-                    .then(response => {
-                        alert(response.data);
-                    })
-            }
-
-}
-    });
-</script>
-
 	</body>
 	</html>

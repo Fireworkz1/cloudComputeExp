@@ -524,7 +524,7 @@
 <!--                        "Content-Type": "multipart/form-data"-->
 <!--                    }-->
 <!--                }-->
-                this.axios.post("/musicLink/uploadSong", formData, config)
+                this.axios.post("/musicLink/uploadSong", formData)
                     .then(response => {
                         alert(response.data);
                     })

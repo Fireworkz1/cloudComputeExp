@@ -519,12 +519,12 @@
                 formData.append("age", this.data.age);
                 formData.append("music", this.data.music);
                 formData.append("picture", this.data.picture);
-                let config = {
-                    header: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }
-                this.axios.post("/file/upload", formData, config)
+<!--                let config = {-->
+<!--                    header: {-->
+<!--                        "Content-Type": "multipart/form-data"-->
+<!--                    }-->
+<!--                }-->
+                this.axios.post("/musicLink/uploadSong", formData, config)
                     .then(response => {
                         alert(response.data);
                     })

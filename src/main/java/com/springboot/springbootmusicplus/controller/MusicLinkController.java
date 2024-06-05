@@ -6,15 +6,21 @@ import com.springboot.springbootmusicplus.common.page.PageResponse;
 import com.springboot.springbootmusicplus.common.response.Response;
 import com.springboot.springbootmusicplus.common.utils.PageUtil;
 import com.springboot.springbootmusicplus.entity.Musiclink;
+import com.springboot.springbootmusicplus.model.request.UploadRequest;
 import com.springboot.springbootmusicplus.service.impl.MusiclinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -70,7 +76,8 @@ public class MusicLinkController {
     }
     @PostMapping("/uploadSongs")
     @ApiOperation(value = "上传歌曲", httpMethod = "POST")
-    public void uploadSongs(@PathVariable Musiclink musiclink) {
-        musiclinkService.uploadSongs(musiclink);
+    public void uploadSongs(@RequestBody UploadRequest uploadRequest) {
+        musiclinkService.uploadSongs(uploadRequest);
     }
+
 }

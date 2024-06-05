@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MusiclinkMapper extends BaseMapper<Musiclink> {
-    @Insert("INSERT INTO musiclink (ml_id, ml_songName, ml_singer, ml_songLink, ml_lyricLink, ml_photoLink) " +
-            "VALUES (#{ml_id}, #{ml_songName}, #{ml_singer}, #{ml_songLink}, #{ml_lyricLink}, #{ml_photoLink})")
-    void insertMusiclink(Integer ml_id, String ml_songName, String ml_singer, String ml_songLink, String ml_lyricLink, String ml_photoLink);
+    @Insert("INSERT INTO musiclink ( ml_songName, ml_singer, ml_songLink, ml_lyricLink, ml_photoLink) " +
+            "VALUES ( #{ml_songName}, #{ml_singer}, #{ml_songLink}, #{ml_lyricLink}, #{ml_photoLink})")
+    void insertMusiclink(String ml_songName, String ml_singer, String ml_songLink, String ml_lyricLink, String ml_photoLink);
 }

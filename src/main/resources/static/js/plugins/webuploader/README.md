@@ -2,7 +2,7 @@
 ========================
 
 ```bash
-├── Uploader.swf                      # SWF文件，当使用Flash运行时需要引入。
+├── OSSUploader.swf                      # SWF文件，当使用Flash运行时需要引入。
 ├
 ├── webuploader.js                    # 完全版本。
 ├── webuploader.min.js                # min版本

@@ -1,6 +1,8 @@
 package com.springboot.springbootmusicplus.service;
 
+import com.springboot.springbootmusicplus.common.response.Response;
 import com.springboot.springbootmusicplus.entity.Musiclink;
+import com.springboot.springbootmusicplus.model.request.UploadRequest;
 
 import java.util.List;
 
@@ -12,5 +14,5 @@ import java.util.List;
 public interface IMusiclinkService {
     List<Musiclink> getMusiclinkInfoBySinger(String singer);
     Musiclink getMusiclinkInfoById(Integer id);
-    void uploadSongs(Musiclink musiclink);
+    Response<Object> uploadSongs(UploadRequest uploadRequest);
 }

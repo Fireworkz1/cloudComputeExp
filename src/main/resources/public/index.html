@@ -684,7 +684,7 @@
             return {
                 data: {
                     name: null,
-                    age: 18,
+                    singer: '',
                     file: null ,
                     music: null ,
                     picture: null // 用于存储上传文件的元数据
@@ -711,7 +711,7 @@
                 // 新建form表单
                 const formData = new FormData();
                 formData.append("name", this.data.name);
-                formData.append("age", this.data.age);
+                formData.append("singer", this.data.singer);
                 formData.append("music", this.data.music);
                 formData.append("picture", this.data.picture);
 <!--                let config = {-->

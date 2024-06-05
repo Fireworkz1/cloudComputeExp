@@ -74,7 +74,7 @@ public class MusicLinkController {
         }
         return Response.succ(songs);
     }
-    @PostMapping("/uploadSongs")
+    @PostMapping("/uploadSong")
     @ApiOperation(value = "上传歌曲", httpMethod = "POST")
     public void uploadSongs(@RequestBody UploadRequest uploadRequest) {
         musiclinkService.uploadSongs(uploadRequest);

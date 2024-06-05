@@ -481,6 +481,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <!-- 引入 Element UI 的 JS 文件 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     new Vue({
   el: '#app',
@@ -524,10 +525,21 @@
 <!--                        "Content-Type": "multipart/form-data"-->
 <!--                    }-->
 <!--                }-->
-                this.axios.post("/musicLink/uploadSong", formData)
+                axios.post("/musicLink/uploadSongs", formData)
                     .then(response => {
-                        alert(response.data);
+                    if(response.data.code==200){
+                      console.log(response.data);
+                      alert("上传成功");
+                    }
+
+                     else{
+                     alert("上传失败");
+                     console.log(response.data);
+                     }
                     })
+                     .catch(error => {
+                        console.error('请求失败:', error);
+                      });
             }
 
 }

@@ -47,4 +47,7 @@ public class MusiclinkOperator extends BaseOperator<MusiclinkMapper, Musiclink> 
         query.eq(Musiclink::getMlSinger, singer);
         return musiclinkMapper.selectList(query);
     }
+    public void insert(Musiclink musiclink){
+        musiclinkMapper.insert(musiclink);
+    }
 }

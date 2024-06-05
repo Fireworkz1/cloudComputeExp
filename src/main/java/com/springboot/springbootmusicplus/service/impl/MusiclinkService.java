@@ -4,7 +4,6 @@ import com.aliyuncs.exceptions.ClientException;
 import com.springboot.springbootmusicplus.common.response.Response;
 import com.springboot.springbootmusicplus.dao.operator.MusiclinkOperator;
 import com.springboot.springbootmusicplus.entity.Musiclink;
-import com.springboot.springbootmusicplus.mapper.MusiclinkMapper;
 import com.springboot.springbootmusicplus.model.request.UploadRequest;
 import com.springboot.springbootmusicplus.oss.FilenameParser;
 import com.springboot.springbootmusicplus.oss.OSSUploader;
@@ -13,7 +12,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,8 +26,7 @@ public class MusiclinkService implements IMusiclinkService {
 
     @Autowired
     private MusiclinkOperator musiclinkOperator;
-    @Resource
-    private MusiclinkMapper musiclinkMapper;
+
     @Autowired
     private OSSUploader ossUploader;
     @Autowired
@@ -80,7 +77,7 @@ public class MusiclinkService implements IMusiclinkService {
             musiclink.setMlSongname(uploadRequest.getName());
             musiclink.setMlSonglink(songurl);
 
-            musiclinkMapper.insertMusiclink( musiclink.getMlSongname(), musiclink.getMlSinger(), musiclink.getMlSonglink(), musiclink.getMlLyriclink(), musiclink.getMlPhotolink());
+            musiclinkOperator.insert(musiclink);
             return Response.succ();
         } catch (RuntimeException | ClientException e) {
             e.printStackTrace();

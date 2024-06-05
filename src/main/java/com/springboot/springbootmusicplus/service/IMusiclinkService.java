@@ -12,4 +12,5 @@ import java.util.List;
 public interface IMusiclinkService {
     List<Musiclink> getMusiclinkInfoBySinger(String singer);
     Musiclink getMusiclinkInfoById(Integer id);
+    void uploadSongs(Musiclink musiclink);
 }

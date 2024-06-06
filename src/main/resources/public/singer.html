@@ -505,7 +505,7 @@
             return {
                 data: {
                     name: null,
-                    singer: singer,
+                    singer: '',
                     file: null ,
                     music: null ,
                     picture: null // 用于存储上传文件的元数据
@@ -535,11 +535,7 @@
                 formData.append("singer", this.data.singer);
                 formData.append("music", this.data.music);
                 formData.append("picture", this.data.picture);
-<!--                let config = {-->
-<!--                    header: {-->
-<!--                        "Content-Type": "multipart/form-data"-->
-<!--                    }-->
-<!--                }-->
+
                 this.axios.post("/musicLink/uploadSong", formData)
                     .then(response => {
                         alert(response.data);

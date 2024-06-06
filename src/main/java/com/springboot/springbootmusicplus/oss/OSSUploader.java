@@ -23,14 +23,18 @@ public class OSSUploader {
         String fileEndpoint = "https://fireworkz.oss-cn-wulanchabu.aliyuncs.com";
         // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
+
         // 填写Bucket名称，例如examplebucket。
         String bucketName = "fireworkz";
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String objectName;
+        String tempDirPath;
         if(type.equals("music")){
             objectName = "music/" + filename;
+            tempDirPath=System.getProperty("java.io.tmpdir") + File.separator + "music";
         } else if (type.equals("pic")) {
             objectName = "pic/" + filename;
+            tempDirPath=System.getProperty("java.io.tmpdir") + File.separator + "pic";
         }else {
             throw new RuntimeException("fake type");
         }
@@ -38,9 +42,18 @@ public class OSSUploader {
         // 填写本地文件的完整路径，例如D:\\localpath\\examplefile.txt。
         // 如果未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
 
-        String tempFilePath = "/temp/" + filename;
+        File tempDir = new File(tempDirPath);
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        String tempFilePath = tempDirPath + File.separator  + filename;
         // 创建一个临时文件
         File file = new File(tempFilePath);
+        File parentDir = file.getParentFile();
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
         try {
             // 将 MultipartFile 转换为 File
             multipartFile.transferTo(file);

@@ -66,7 +66,7 @@ public class MusiclinkService implements IMusiclinkService {
             if(!uploadRequest.getPicture().isEmpty()){
                 String originalPicName=uploadRequest.getPicture().getOriginalFilename();
                 String newPicName=filenameParser.parse(originalPicName);
-                String picurl=ossUploader.uploadFile(uploadRequest.getMusic(),newPicName,"pic");
+                String picurl=ossUploader.uploadFile(uploadRequest.getPicture(),newPicName,"pic");
                 musiclink.setMlPhotolink(picurl);
             }else {
                 musiclink.setMlPhotolink("https://fireworkz.oss-cn-wulanchabu.aliyuncs.com/pic/blank.jpg");
@@ -76,7 +76,7 @@ public class MusiclinkService implements IMusiclinkService {
             musiclink.setMlSinger(uploadRequest.getSinger());
             musiclink.setMlSongname(uploadRequest.getName());
             musiclink.setMlSonglink(songurl);
-
+            musiclink.setMlLyriclink("0");
             musiclinkOperator.insert(musiclink);
             return Response.succ();
         } catch (RuntimeException | ClientException e) {

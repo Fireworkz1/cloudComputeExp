@@ -98,9 +98,6 @@
 							</span>
                             </div><!-- /input-group -->
                         </div><!-- /.col-lg-6 -->
-                        <div id="clock">
-                            <p class="time">{{ time }}</p>
-                        </div>
                     </div><!-- /.row -->
                 </form>
             </div>
@@ -499,37 +496,47 @@
             },
             /* 提交修改*/
             onSubmit() {
-                //注意执行submit方法后，他会触发upload组件中的 http-request
-<!--                this.$refs.upload.submit()-->
-                // 新建form表单
+                // 检查每个值是否为空
+                if (!this.data.name) {
+                    alert("请填写名称");
+                    return;
+                }
+                if (!this.data.singer) {
+                    alert("请填写歌手");
+                    return;
+                }
+                if (!this.data.music) {
+                    alert("请上传音乐文件");
+                    return;
+                }
+                if (!this.data.picture) {
+                    alert("请上传图片文件");
+                    return;
+                }
+
+                // 新建 form 表单
                 const formData = new FormData();
                 formData.append("name", this.data.name);
                 formData.append("singer", this.data.singer);
                 formData.append("music", this.data.music);
                 formData.append("picture", this.data.picture);
-<!--                let config = {-->
-<!--                    header: {-->
-<!--                        "Content-Type": "multipart/form-data"-->
-<!--                    }-->
-<!--                }-->
+
+                // 提交表单数据
                 axios.post("/musicLink/uploadSongs", formData)
                     .then(response => {
-
-                    console.log(this.data.music);
-                    if(response.data.code==200){
-
-                      console.log(response.data);
-                      alert("上传成功");
-                    }
-
-                     else{
-                     alert("上传失败");
-                     console.log(response.data);
-                     }
+                        console.log(this.data.music);
+                        if (response.data.code == 200) {
+                            console.log(response.data);
+                            alert("上传成功");
+                        } else {
+                            alert("上传失败");
+                            console.log(response.data);
+                        }
                     })
-                     .catch(error => {
+                    .catch(error => {
                         console.error('请求失败:', error);
-                      });
+                        alert("上传失败");
+                    });
             }
 
 }

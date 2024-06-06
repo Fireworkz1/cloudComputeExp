@@ -426,37 +426,7 @@
 	</div>
 </div>	
 
-<!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---
- 
-                                                   最后 页脚 
 
---><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-<!--<div class="footer">-->
-<!--		<div class="links">-->
-<!--			<a hidefocus="true" href="#" target="_blank">关于轻语</a>|-->
-<!--			<a hidefocus="true" href="#" id="report">监督举报</a> | -->
-<!--			<a hidefocus="true" href="#" target="_blank">广告服务</a> | -->
-<!--			<a hidefocus="true" target="_blank" href="#">版权指引</a>|-->
-<!--			<a target="_blank" href="#">隐私政策</a>| -->
-<!--			<a hidefocus="true" target="_blank" href="#">用户服务协议</a> | -->
-<!--			<a hidefocus="true" target="_blank" href="#">推广合作</a> | -->
-<!--			<a hidefocus="true" target="_blank" href="#">轻语音乐人</a> |-->
-<!--			<a hidefocus="true" target="_blank" href="#">轻语音乐推</a> |-->
-<!--			<a hidefocus="true" href="#" target="_blank">招聘信息</a> | -->
-<!--			<a hidefocus="true" href="#" target="_blank">客服中心</a> | -->
-<!--			<a hidefocus="true" href="#" target="_blank">用户体验提升计划</a>-->
-<!--		</div>-->
-<!--		<div class="copyright">-->
-<!--			<p style="-moz-user-select: text;-webkit-user-select: text;-ms-user-select: text; user-select:text">我们致力于推动网络正版音乐发展，相关版权合作请联系copyrights@qingyu.com</p>-->
-<!--			<p>信息网络传播视听节目许可证 1910666 增值电信业务经营许可证粤B2-20066666 &nbsp;&nbsp;&nbsp;<a hidefocus="true" target="_blank" href="http://www.miitbeian.gov.cn/"></a><span class="footerIcon"><a target="_blank" href="http://sq.ccm.gov.cn:80/ccnt/sczr/service/business/emark/toDetail/E64D2439A71544C7B995FC0A53D8F965">&nbsp;&nbsp;&nbsp;&nbsp;</a></span></p>-->
-<!--			<p>广播电视节目制作经营许可证（粤）字第01270号&nbsp;&nbsp;&nbsp;&nbsp;营业性演出许可证穗天演440106026</p>-->
-<!--			<p>穗公网监备案证第44010650010167&nbsp;&nbsp;&nbsp;&nbsp;互联网药品信息服务资格证编号（粤）-非经营性-2012-0018<a style="" target="_blank" href="#">&nbsp;&nbsp;&nbsp;<span></span></a></p>-->
-<!--			<p style="-moz-user-select: text;-webkit-user-select: text;-ms-user-select: text; user-select:text">不良信息举报邮箱：jubao_music@qingyu.net&nbsp;&nbsp;&nbsp;&nbsp;客服邮箱：kefu@qingyu.net</p>-->
-<!--			<p>Copyright&nbsp;&nbsp;©&nbsp;&nbsp;2004-2018 QingYu-Inc.All Rights Reserved-->
-<!--				<a hidefocus="true" class="office-verification" href="http://netadreg.gzaic.gov.cn/ntmm/WebSear/WebLogoPub.aspx?logo=440106106022006022000209" target="_blank"></a>-->
-<!--			</p>-->
-<!--		</div>-->
-<!--	</div>-->
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap-paginator.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
@@ -498,14 +468,14 @@
 <!-- 引入 Element UI 的 JS 文件 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script>
-	new Vue({
+new Vue({
   el: '#app',
   name: "upload",
         data() {
             return {
                 data: {
                     name: null,
-                    singer: singer,
+                    singer: '',
                     file: null ,
                     music: null ,
                     picture: null // 用于存储上传文件的元数据
@@ -535,19 +505,51 @@
                 formData.append("singer", this.data.singer);
                 formData.append("music", this.data.music);
                 formData.append("picture", this.data.picture);
-<!--                let config = {-->
-<!--                    header: {-->
-<!--                        "Content-Type": "multipart/form-data"-->
-<!--                    }-->
-<!--                }-->
+
                 this.axios.post("/musicLink/uploadSong", formData)
                     .then(response => {
                         alert(response.data);
                     })
             }
-
 }
-    });
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	// 找到所有 class 为 "singername" 的元素
+	var singerNames = document.querySelectorAll('.singername');
+
+	// 为每个元素绑定点击事件
+	singerNames.forEach(function(singerNameElement) {
+		singerNameElement.addEventListener('click', function() {
+			// 获取点击的元素内容并调用 getlist 函数
+			var singerName = singerNameElement.textContent;
+			getList(singerName);
+		});
+	});
+});
+
+
+function getList(singerName) {
+	$.ajax({
+		url: "musicLink/getSongsBySinger/"+singerName,//后台地址
+		type: "GET",//post方式请求
+		success: function (data) {
+			if (data.code == 200) {
+				$.removeCookie("song_search", { path: '/' });
+				var singer = singerName;
+				$.cookie("singer", singer, {expires: 7, path: "/"});
+
+				window.open("/musicSearchTest.html");
+			} else if (data.code != 200) {
+				alert("搜索不到该歌手歌曲！");
+			}
+		},
+		error: function (data) {
+			alert(JSON.stringify(data));
+		}
+	})
+}//已在mymusic中注释
 </script>
 	</body>
 	</html>

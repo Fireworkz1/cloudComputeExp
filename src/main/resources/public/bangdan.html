@@ -528,6 +528,13 @@
                         if (response.data.code == 200) {
                             console.log(response.data);
                             alert("上传成功");
+                            this.is_add_form_visiable = false
+                            this.data.name = null;
+                            this.data.singer = '';
+                            this.data.file = null;
+                            this.data.music = null;
+                            this.data.picture = null;
+
                         } else {
                             alert("上传失败");
                             console.log(response.data);
